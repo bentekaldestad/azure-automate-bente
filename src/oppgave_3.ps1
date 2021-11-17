@@ -1,4 +1,4 @@
-r$Url="http://nav-deckofcards.herokuapp.com/shuffle"
+$Url="http://nav-deckofcards.herokuapp.com/shuffle"
 
 $response = Invoke-WebRequest -Uri $Url
 
