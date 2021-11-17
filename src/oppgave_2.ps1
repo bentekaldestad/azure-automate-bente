@@ -5,4 +5,4 @@ param (
     $name ="Bente"
 )
 
-Write-Host "$name say hello to world!! "
+Write-Host "$name - say hello to world!! "
