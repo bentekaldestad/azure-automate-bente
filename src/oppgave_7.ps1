@@ -10,16 +10,24 @@ $response = Invoke-WebRequest -Uri $UrlKortstokk
 
 $cards = $response.Content| ConvertFrom-Json
 
-$sum = 0
-foreach ($card in $cards) {
-    $sum += switch ($card.value)
-    { 
-        'J' {10}
-        'Q' {10}
-        'K' {10}
-        'A' {11}
-        Default {$card.value}
+function Kortsum {
+    param ( 
+    [Parameter()]
+    [Object[]]
+        $Cards
+    ) 
+    $sum = 0
+    foreach ($card in $cards) {
+        $sum += switch ($card.value)
+        { 
+            'J' {10}
+            'Q' {10}
+            'K' {10}
+            'A' {11}
+            Default {$card.value}
+        }
     }
+    $sum
 }
 
 function kortstokkprint {
@@ -42,53 +50,36 @@ foreach ($card in $cards) {
 }
 
 #Write-Host "Kortstokk: $(kortstokkprint($cards))"
-#Write-Host "Poengsum: $sum"
+$sumkortstokk=kortsum($cards)
+Write-Host "Poengsum: $sumkortstokk"
 
-$meg = $cards[0..3]
-$summeg = 0
-foreach ($card in $meg) {
-    $summeg += switch ($card.value)
-    { 
-        'J' {10}
-        'Q' {10}
-        'K' {10}
-        'A' {11}
-        Default {$card.value}
-    }
-}
+$meg = $cards[0..1]
+$cards = $cards[2..$cards.Length]
+$magnus = $cards[0..1]
+$cards = $cards[2..$cards.Length]
 
-$kortstokk = $cards[4..$cards.Length]
-$magnus = $kortstokk[0..3]
-$summagnus = 0
-foreach ($card in $magnus) {
-    $summagnus += switch ($card.value)
-   { 
-        'J' {10}
-        'Q' {10}
-        'K' {10}
-        'A' {11}
-        Default {$card.value}
-    }
-}
-
-$kortstokk2 = $kortstokk[4..$kortstokk.Length]
-
-#Write-Host "meg: $(kortstokkprint($meg))"
-#Write-Output "sum meg: $summeg"
-#Write-Host "Magnus: $(kortstokkprint($magnus))"
-#Write-Output "Sum Magnus: $summagnus"
-#Write-Host "Kortstokk: $(kortstokkprint($kortstokk2))"
+Write-Host "meg: $(kortstokkprint($meg))"
+Write-Host "Magnus: $(kortstokkprint($magnus))"
+#Write-Host "Kortstokk: $(kortstokkprint($cards))"
 
 
 # bruker 'blackjack' som et begrep - er 21
 $blackjack = 21
 
-if (($summeg) -eq $blackjack) {
-    Write-Output "meg | $meg | $summeg" 
+$summeg = kortsum($meg)
+$summagnus = kortsum($magnus)
+Write-Host "sum meg $summeg"
+Write-Host "sum magnus $summagnus"
+
+if ($summeg -eq $blackjack -and $summagnus -eq $blackjack){
+    Write-Output "Dawn"
+ }
+elseif (($summeg) -eq $blackjack) {
+    Write-Output "Vinner: meg | $(kortstokkprint($meg)) | $summeg" 
     exit
 }
 elseif (($summagnus) -eq $blackjack) {
-    Write-Output "Magnus | $magnus | $summagnus" 
+    Write-Output "Vinner: Magnus | $(kortstokkprint($magnus)) | $summagnus" 
     exit
 }
 else {
