@@ -52,3 +52,33 @@ $kortstokk2 = $kortstokk[2..$kortstokk.Length]
 Write-Host "meg: $(kortstokkprint($meg))"
 Write-Host "Magnus: $(kortstokkprint($magnus))"
 Write-Host "Kortstokk: $(kortstokkprint($kortstokk2))"
+
+
+function skrivUtResultat {
+    param (
+        [string]
+        $vinner,        
+        [object[]]
+        $kortStokkMagnus,
+        [object[]]
+        $kortStokkMeg        
+    )
+    Write-Output "Vinner: $vinner"
+    Write-Output "magnus | $(sumPoengKortstokk -kortstokk <#?#>) | $(<#?#> -kortstokk $kortStokkMagnus)"    
+    Write-Output "meg    | $(sumPoengKortstokk -kortstokk <#?#>) | $(<#?#> -kortstokk $kortStokkMeg)"
+}
+
+# bruker 'blackjack' som et begrep - er 21
+$blackjack = 21
+
+if ((sumPoengKortstokk -kortstokk $meg) -eq $blackjack) {
+    skrivUtResultat -vinner <#?#> -kortStokkMagnus <#?#> -kortStokkMeg <#?#>
+    exit
+}
+elseif ((sumPoengKortstokk -kortstokk <#?#>) -eq $blackjack) {
+    skrivUtResultat -vinner "magnus" -kortStokkMagnus <#?#> -kortStokkMeg <#?#>
+    exit
+}
+
+# Hva er om begge har blackjack? Kanskje det kalles draw?
+# frivillig - kan du endre koden til å ta hensyn til draw?
