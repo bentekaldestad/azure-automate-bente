@@ -45,10 +45,10 @@ Write-Host "Kortstokk: $(kortstokkprint($cards))"
 Write-Host "Poengsum: $sum"
 
 $meg = $cards[0..1]
-$kortstokk = $cards[2..$cards.Length]
+$cards = $cards[2..$cards.Length]
 $magnus = $kortstokk[0..1]
-$kortstokk2 = $kortstokk[2..$kortstokk.Length]
+$cards = $cards[2..$cards.Length]
 
 Write-Host "meg: $(kortstokkprint($meg))"
 Write-Host "Magnus: $(kortstokkprint($magnus))"
-Write-Host "Kortstokk: $(kortstokkprint($kortstokk2))"
+Write-Host "Kortstokk: $(kortstokkprint($cards))"
