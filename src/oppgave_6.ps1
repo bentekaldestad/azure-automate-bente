@@ -46,7 +46,7 @@ Write-Host "Poengsum: $sum"
 
 $meg = $cards[0..1]
 $cards = $cards[2..$cards.Length]
-$magnus = $kortstokk[0..1]
+$magnus = $cards[0..1]
 $cards = $cards[2..$cards.Length]
 
 Write-Host "meg: $(kortstokkprint($meg))"
