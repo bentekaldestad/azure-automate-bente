@@ -81,7 +81,7 @@ function skrivUtResultat {
 $blackjack = 21
 
 if (((kortsum -Cards $meg) -eq $blackjack) -and ((Kortsum -Cards $magnus) -eq $blackjack)) {
-    skrivUtResultat -vinner "dawn"
+    skrivUtResultat -vinner "dawn" -kortStokkMagnus $magnus -kortStokkMeg $meg
     exit
 }
 elseif
@@ -91,5 +91,14 @@ elseif
 }
 elseif ((Kortsum -Cards $magnus) -eq $blackjack) {
     skrivUtResultat -vinner "magnus" -kortStokkMagnus $magnus -kortStokkMeg $meg
+    exit
+}
+
+while ((Kortsum -Cards $meg) -lt 17) {
+    $meg += $cards[0]
+    $cards = $cards[1..$cards.Count]
+}
+if ((Kortsum -Cards $meg) -gt $blackjack) {
+    skrivUtResultat -vinner "magnus" $(kortstokkprint($magnus)) $(kortstokkprint($meg))
     exit
 }
