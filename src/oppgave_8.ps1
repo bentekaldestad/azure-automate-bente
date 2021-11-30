@@ -99,6 +99,6 @@ while ((Kortsum -Cards $meg) -lt 17) {
     $cards = $cards[1..$cards.Count]
 }
 if ((Kortsum -Cards $meg) -gt $blackjack) {
-    skrivUtResultat -vinner "magnus" $(kortstokkprint($magnus)) $(kortstokkprint($meg))
+    skrivUtResultat -vinner "magnus" -kortStokkMagnus $magnus -kortStokkMeg $meg
     exit
 }
